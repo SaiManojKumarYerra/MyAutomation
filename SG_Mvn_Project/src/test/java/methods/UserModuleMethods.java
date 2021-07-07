@@ -20,7 +20,7 @@ public class UserModuleMethods extends DriverScript implements ObjectLocators{
 		try {
 			strStatus+= appInd.clickObject(oDriver, objUserMenu, test);
 			strStatus+= appInd.clickObject(oDriver, objAddUserBtn, test);
-			Thread.sleep(2000);
+			appInd.waitForElement(oDriver, objFirstNameEdit, "Clickable", "", 10);
 			
 			if(appInd.verifyElementExist(oDriver, objAddUserWindow, test)) {
 				reports.writeResult(oDriver, "Pass", "The Add User page has opened successful", test);
@@ -31,9 +31,10 @@ public class UserModuleMethods extends DriverScript implements ObjectLocators{
 				strStatus+= appInd.setObject(oDriver, objUser_PwdEdit, data.get("User_PWD"), test);
 				strStatus+= appInd.setObject(oDriver, objUser_RetypePWdEdit, data.get("User_RetypePWD"), test);
 				strStatus+= appInd.clickObject(oDriver, objCreateUserBtn, test);
-				Thread.sleep(2000);
+				
 				
 				userName = data.get("LN")+", "+data.get("FN");
+				appInd.waitForElement(oDriver, By.xpath("//div[@class='name']/span[text()="+"'"+userName+"'"+"]"), "Visible", "", 10);
 				
 				strStatus+= appInd.verifyElementExist(oDriver, By.xpath("//div[@class='name']/span[text()="+"'"+userName+"'"+"]"), test);
 				
@@ -66,9 +67,9 @@ public class UserModuleMethods extends DriverScript implements ObjectLocators{
 		String strStatus = null;
 		try {
 			strStatus+= appInd.clickObject(oDriver, By.xpath("//div[@class='name']/span[text()="+"'"+userName+"'"+"]"), test);
-			Thread.sleep(2000);
+			appInd.waitForElement(oDriver, objDeleteUserBtn, "Clickable", "", 10);
 			
-			strStatus+= appInd.clickObject(oDriver, objDeleteUserBtn, test);
+			strStatus+= appInd.jsClickObject(oDriver, objDeleteUserBtn, test);
 			Thread.sleep(2000);
 			
 			oDriver.switchTo().alert().accept();
